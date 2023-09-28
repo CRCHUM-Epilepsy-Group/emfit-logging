@@ -66,7 +66,7 @@ def save_alarm_to_file(alarm_time: datetime) -> None:
 
 
 def send_alarms_to_redcap() -> None:
-    """Send the ALARMS_LOG_FILE to the REDCap instance, under the 'emfit_alarms_log'
+    """Send the ALARMS_LOG_FILE to the REDCap instance, under the configured
     field in the dedicated project.
 
     Configuration for the REDCap API and project are under config.toml.
