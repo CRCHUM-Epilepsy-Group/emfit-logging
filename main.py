@@ -77,6 +77,7 @@ def send_alarms_to_redcap() -> None:
         CONFIG["redcap"]["REDCAP_API_URL"], CONFIG["redcap"]["REDCAP_API_TOKEN"]
     )
     with open(ALARMS_LOG_FILE) as f:
+        # Import file == upload to REDCap
         redcap_files.import_file(
             record=CONFIG["redcap"]["REDCAP_RECORD_ID"],
             field=CONFIG["redcap"]["REDCAP_FILE_FIELD"],
