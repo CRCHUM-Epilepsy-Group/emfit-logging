@@ -10,4 +10,4 @@
     REDCAP_API_TOKEN  = "token here"      # Your REDCap project's API token
     REDCAP_API_URL    = "redcap url here" # The API URL of your REDCap instance
     REDCAP_FILE_FIELD = "file field here" # Set to the REDCap field for file upload
-    REDCAP_RECORD_ID  = "record is here"  # Record ID of the patient.
+    REDCAP_RECORD_ID  = "record is here"  # Record ID of the patient. It needs to be a string of an integer.
