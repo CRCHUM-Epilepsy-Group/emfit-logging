@@ -38,7 +38,7 @@ def setup_pin_factory() -> None:
             gpiozero.Device.pin_factory = MockFactory()
 
 
-def test_alarm(button: gpiozero.Button) -> None:
+def test_alarm(device: gpiozero.DigitalInputDevice) -> None:
     """Simulate an alarm from the AUX port of the Emfit device.
     This is only used when testing the script from a Windows machine,
     where there are no GPIO pins.
@@ -47,13 +47,13 @@ def test_alarm(button: gpiozero.Button) -> None:
     time_active = 1.5
     logging.debug(f"Simulating pin activation for {time_active:.1f} s")
 
-    assert isinstance(button.pin, MockPin)
+    assert isinstance(device.pin, MockPin)
 
     sleep(1)
-    button.pin.drive_low()
+    device.pin.drive_low()
     logging.debug(f"Pin active, sleeping for {time_active:.1f} s")
     sleep(time_active)
-    button.pin.drive_high()
+    device.pin.drive_high()
     logging.debug("Pin deactivated")
 
 
@@ -116,9 +116,9 @@ def wait_for_alarms() -> None:
 
     logging.info("Waiting for alarms...")
 
-    button = gpiozero.Button(CONFIG["emfit"]["AUX_2_PIN"])
-    button.when_pressed = alarm_detected
-    button.when_released = alarm_stopped  # is this really necessary?
+    device = gpiozero.DigitalInputDevice(CONFIG["emfit"]["AUX_2_PIN"])
+    device.when_activated = alarm_detected
+    device.when_deactivated = alarm_stopped  # is this really necessary?
 
     match platform.system():
         case "Linux":
@@ -126,7 +126,7 @@ def wait_for_alarms() -> None:
             signal.pause()  # type: ignore
 
         case "Windows":
-            test_alarm(button)
+            test_alarm(device)
 
 
 def main() -> None:
