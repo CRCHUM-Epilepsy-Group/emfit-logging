@@ -8,8 +8,6 @@ import sys
 from time import sleep
 import tomllib
 
-from gpiozero.pins.native import NativeFactory
-from gpiozero.pins.mock import MockFactory, MockPin
 import gpiozero
 import requests
 
@@ -30,10 +28,14 @@ with open(PROJ_ROOT / "config.toml", "rb") as f:
 def setup_pin_factory() -> None:
     match platform.system():
         case "Linux":
+            from gpiozero.pins.native import NativeFactory
+
             logging.debug("Setting pin factory to NativeFactory (Linux)")
             gpiozero.Device.pin_factory = NativeFactory()
 
         case "Windows":
+            from gpiozero.pins.mock import MockFactory
+
             logging.debug("Setting pin factory to MockFactory (Windows)")
             gpiozero.Device.pin_factory = MockFactory()
 
@@ -43,6 +45,7 @@ def test_alarm(device: gpiozero.DigitalInputDevice) -> None:
     This is only used when testing the script from a Windows machine,
     where there are no GPIO pins.
     """
+    from gpiozero.pins.mock import MockPin
 
     time_active = 1.5
     logging.debug(f"Simulating pin activation for {time_active:.1f} s")
