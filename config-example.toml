@@ -2,8 +2,8 @@
     # Mapping of pins from the AUX cable to Raspberry Pi GPIO pins
     AUX_1_PIN = "BOARD9" # Common return (Ground, above pin 17. Not really needed to specify)
     AUX_2_PIN = 17       # Normally Open (NO) send
-    AUX_3_PIN = 22       # Normally Closed (NC) send
-    AUX_4_PIN = 27       # Low Battery send (NC)
+    AUX_3_PIN = 27       # Normally Closed (NC) send
+    AUX_4_PIN = 22       # Low Battery send (NC)
 
 [redcap]
     # Config data needed to send the alarms log to REDCap
