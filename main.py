@@ -16,7 +16,7 @@ from redcap.methods.files import Files
 
 PROJ_ROOT = Path(__file__).parent.resolve()
 logging.basicConfig(
-    filename=PROJ_ROOT / "emfit.log",
+    filename=PROJ_ROOT / "emfit-logging.log",
     format="%(levelname)s: %(message)s",
     level=logging.DEBUG,
 )
