@@ -119,9 +119,8 @@ def wait_for_alarms() -> None:
 
     logging.info("Waiting for alarms...")
 
-    device = gpiozero.DigitalInputDevice(CONFIG["emfit"]["AUX_2_PIN"])
+    device = gpiozero.DigitalInputDevice(CONFIG["emfit"]["AUX_2_PIN"], pull_up=True)
     device.when_activated = alarm_detected
-    device.when_deactivated = alarm_stopped  # is this really necessary?
 
     match platform.system():
         case "Linux":
