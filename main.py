@@ -85,6 +85,7 @@ def send_alarms_to_redcap() -> None:
             field=CONFIG["redcap"]["REDCAP_FILE_FIELD"],
             file_name=ALARMS_LOG_FILE.name,
             file_object=f,
+            event=CONFIG["redcap"]["REDCAP_EVENT_NAME"],
         )
 
 
