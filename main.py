@@ -17,7 +17,7 @@ from redcap.methods.files import Files
 PROJ_ROOT = Path(__file__).parent.resolve()
 logging.basicConfig(
     filename=PROJ_ROOT / "emfit-logging.log",
-    format="%(levelname)s: %(message)s",
+    format="[%(asctime)s] %(levelname)s: %(message)s",
     level=logging.DEBUG,
 )
 ALARMS_LOG_FILE = PROJ_ROOT / f"alarms-{socket.gethostname()}.log"
