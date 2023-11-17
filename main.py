@@ -11,7 +11,7 @@ import tomllib
 import gpiozero
 import requests
 
-from redcap.methods.files import Files
+from redcap.project import Project
 
 
 PROJ_ROOT = Path(__file__).parent.resolve()
@@ -75,17 +75,21 @@ def send_alarms_to_redcap() -> None:
     """
 
     logging.info(f"Sending {ALARMS_LOG_FILE.name} to REDCap")
-    redcap_files = Files(
+    redcap_project = Project(
         CONFIG["redcap"]["REDCAP_API_URL"], CONFIG["redcap"]["REDCAP_API_TOKEN"]
     )
     with open(ALARMS_LOG_FILE) as f:
         # Import file == upload to REDCap
-        redcap_files.import_file(
+        redcap_project.import_file(
             record=CONFIG["redcap"]["REDCAP_RECORD_ID"],
             field=CONFIG["redcap"]["REDCAP_FILE_FIELD"],
             file_name=ALARMS_LOG_FILE.name,
             file_object=f,
-            event=CONFIG["redcap"]["REDCAP_EVENT_NAME"],
+            event=(
+                CONFIG["redcap"]["REDCAP_EVENT_NAME"]
+                if redcap_project.is_longitudinal
+                else None
+            ),
         )
 
 
