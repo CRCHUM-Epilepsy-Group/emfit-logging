@@ -2,16 +2,30 @@
 Python script for Raspberry Pi to detect and log alarms triggered by the Emfit Movement Monitor to REDCap.
 
 ## Configuration
-The configuration for this project needs a ``config.toml`` file to exist at the root of the project. You can use the ``config-example.toml`` file as a base to create your own configuration.
+The configuration for this project needs a ``config.toml`` file to exist at the root of the project.
+You can use the ``config-example.toml`` file as a base to create your own configuration.
 
 The configuration is in two parts:
 
-- ``emfit``: Contains the [GPIO pin numbers](gpio) of the Raspberry Pi to connect the AUX cable (from the X2 port) from the Emfit control unit. The default configuration uses 4 consecutive pins on the Raspberry Pi for easier access.
+- ``emfit``: Contains the [GPIO pin numbers](gpio) of the Raspberry Pi to connect the AUX cable (from the X2 port) from the Emfit control unit. The default configuration uses 4 consecutive pins on the Raspberry Pi for easier access, and unless those pins are broken or already occupied, should not have to be changed.
 - ``redcap``: Contains the REDCap configuration;
   - ``REDCAP_API_TOKEN``: The API token generated from the project page. This is very important to keep it secret!
   - ``REDCAP_API_URL``: The URL to the REDCap API. Usually, is it the web domain with ``/api/`` at the end.
+  - ``REDCAP_EVENT_NAME``: In the case of a longitudinal study, the event name in which the instrument is located. If the study is not longitudinal, it can be left blank as the code will not use it anyway.
   - ``REDCAP_FILE_FIELD``: The variable name of the field used to upload the file to. This needs to be a field in an instrument/form set to accept a file upload.
   - ``REDCAP_RECORD_ID``: The Record ID specific to the patient, in REDCap. This is probably the only configuration setting that will need to be modified regularly as new patients are admitted.
+
+## Python Configuration
+The project needs Python >=3.11 to work, as well as the packages listed in ``requirements.txt``.
+So after installing Python 3.11 or newer and cloning the repository, run ``pip install -r requirements.txt`` in your environment (if any) to install the required packages.
+
+## Continuous Logging
+To make sure the program is running at boot, the easiest way is to set a task with ``crontab``.
+By running ``sudo crontab -e`` (and if it is the first time running the command, selecting a default editor) and adding the following line at the end, this will ensure the program is ran at boot.
+```
+@reboot /path/to/python3.11 path/to/emfit-logging/main.py &
+```
+Restarting the Raspberry Pi should start the emfit-logging program automatically now.
 
 ## Plugging the GPIO
 
