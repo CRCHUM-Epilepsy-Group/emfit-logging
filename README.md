@@ -40,7 +40,7 @@ An easy way to use the ones available with the CRCHUM Epilepsy Group is to pass 
 ![Pass the cable through the GPIO opening in the top cover.](/.github/images/connection/step-1.jpg)
 2. Connect the GPIO connector to the Raspberry Pi.
 ![Connect the GPIO connector to the Raspberry Pi.](/.github/images/connection/step-2.jpg)
-3. Close the case.
+3. Close the case. The cable should come out freely from the opening.
 ![Close the case.](/.github/images/connection/step-3.jpg)
 4. Connect the other end of the connector to the X2 port on the Emfit control unit.
 ![Connect the other end of the connector to the X2 port on the Emfit control unit.](/.github/images/connection/step-4.jpg)
