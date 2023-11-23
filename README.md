@@ -58,6 +58,7 @@ An easy way to use the ones available with the CRCHUM Epilepsy Group is to pass 
 ![Close the case.](/.github/images/connection/step-3.jpg)
 4. Connect the other end of the connector to the X2 port on the Emfit control unit.
 ![Connect the other end of the connector to the X2 port on the Emfit control unit.](/.github/images/connection/step-4.jpg)
+5. Don't forget to plug the power supply to the power port of the Raspberry Pi! It should boot automatically after being powered on.
 
 ### Making Connectors
 The CRCHUM Epilepsy Group should have around 10 cables already made for this specific purpose.
