@@ -18,9 +18,12 @@ logging.basicConfig(
     format="[%(asctime)s] %(levelname)s: %(message)s",
     level=logging.DEBUG,
 )
-ALARMS_LOG_FILE = PROJ_ROOT / f"alarms-{socket.gethostname()}.log"
 with open(PROJ_ROOT / "config.toml", "rb") as f:
     CONFIG = tomllib.load(f)
+ALARMS_LOG_FILE = (
+    PROJ_ROOT
+    / f"alarms-{socket.gethostname()}_record-{CONFIG['redcap']['REDCAP_RECORD_ID']}.log"
+)
 
 
 def setup_pin_factory() -> None:
