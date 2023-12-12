@@ -1,18 +1,16 @@
-from datetime import datetime
 import logging
-from pathlib import Path
 import platform
 import signal
 import socket
 import sys
+from datetime import datetime
+from pathlib import Path
 from time import sleep
-import tomllib
 
 import gpiozero
 import requests
-
+import tomllib
 from redcap.project import Project
-
 
 PROJ_ROOT = Path(__file__).parent.resolve()
 logging.basicConfig(
