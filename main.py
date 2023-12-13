@@ -104,7 +104,7 @@ def send_message_to_slack(alarm_time: datetime) -> None:
     logging.debug(f"{formatted_time=}")
     content = f"`{socket.gethostname()}` detected a seizure at {formatted_time}."
 
-    logging.debug("Sending message to Slack")
+    logging.info(f"To Slack: {content}")
     json_data = dict(text=content)
     resp = requests.post(url, json=json_data)
     try:
