@@ -94,6 +94,28 @@ def send_alarms_to_redcap() -> None:
         )
 
 
+def send_message_to_slack(alarm_time: datetime) -> None:
+    """Send the alarm to Slack through a webhook."""
+
+    url: str = CONFIG["slack"]["WEBHOOK_URL"]
+    formatted_time = (
+        f"<!date^{int(alarm_time.timestamp())}^{{date_num}}, {{time}}|{alarm_time}>"
+    )
+    logging.debug(f"{formatted_time=}")
+    content = f"`{socket.gethostname()}` detected a seizure at {formatted_time}."
+
+    logging.debug("Sending message to Slack")
+    json_data = dict(text=content)
+    resp = requests.post(url, json=json_data)
+    try:
+        resp.raise_for_status()
+    except requests.HTTPError as e:
+        logging.exception(
+            f"There was a {e.__class__.__name__} sending a message to Slack.",
+            exc_info=sys.exc_info(),
+        )
+
+
 def alarm_detected() -> None:
     """Actions when the alarm starts.
     Currently, we:
@@ -112,6 +134,9 @@ def alarm_detected() -> None:
             f"There was a {e.__class__.__name__} sending the file to REDCap.",
             exc_info=sys.exc_info(),
         )
+
+    if CONFIG.get("slack"):
+        send_message_to_slack(alarm_time)
 
 
 def alarm_stopped() -> None:
