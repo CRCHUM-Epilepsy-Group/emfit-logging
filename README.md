@@ -13,7 +13,9 @@ The configuration is in two parts:
   - ``REDCAP_API_URL``: The URL to the REDCap API. Usually, is it the web domain with ``/api/`` at the end.
   - ``REDCAP_EVENT_NAME``: In the case of a longitudinal study, the event name in which the instrument is located. If the study is not longitudinal, it can be left blank as the code will not use it anyway.
   - ``REDCAP_FILE_FIELD``: The variable name of the field used to upload the file to. This needs to be a field in an instrument/form set to accept a file upload.
-  - ``REDCAP_RECORD_ID``: The Record ID specific to the patient, in REDCap. This is probably the only configuration setting that will need to be modified regularly as new patients are admitted.
+  - ``REDCAP_RECORD_ID``: The Record ID specific to the patient, in REDCap. This is probably the only configuration setting that will need to be modified regularly as new patients are admitted. If the ID has leading zeros, it needs to be entered as a string, otherwise an integer works.
+- ``slack``: Contains the Slack configuration (optional);
+  - ``WEBHOOK_URL``: A URL to a Slack App Webhook. This will send a message with the hostname and timestamp of the alarm to the designated Slack channel.
 
 ## Python Configuration
 The project needs Python >=3.11 to work, as well as the packages listed in ``requirements.txt``.
@@ -37,7 +39,7 @@ You first need to locate the small arrow on one side of the Dupont connector, as
 
 ![Location of the small arrow on the connector. White arrow added for emphasis.](/.github/images/small-arrow.jpg)
 
-Then, plug the connector with the small arrow being at the top left pin in the diagram (the one labeled "3V3 power"), goind down the GPIO headers.
+Then, plug the connector with the small arrow being at the top left pin in the diagram (the one labeled "3V3 power"), going down the GPIO headers.
 The following pictures show a connector correctly plugged in:
 
 | Connected View 1                                                | Connected View 2                                                |
@@ -58,7 +60,7 @@ An easy way to use the ones available with the CRCHUM Epilepsy Group is to pass 
 ![Close the case.](/.github/images/connection/step-3.jpg)
 4. Connect the other end of the connector to the X2 port on the Emfit control unit.
 ![Connect the other end of the connector to the X2 port on the Emfit control unit.](/.github/images/connection/step-4.jpg)
-5. Don't forget to plug the power supply to the power port of the Raspberry Pi! It should boot automatically after being powered on.
+5. Don't forget to plug the power supply to the USB C power port of the Raspberry Pi! It should boot automatically after being powered on.
 
 ### Making Connectors
 The CRCHUM Epilepsy Group should have around 10 cables already made for this specific purpose.

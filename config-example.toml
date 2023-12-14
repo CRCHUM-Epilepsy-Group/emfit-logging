@@ -11,7 +11,7 @@
     REDCAP_API_URL    = "redcap url here" # The API URL of your REDCap instance
     REDCAP_EVENT_NAME = "event name here" # Set to the REDCap event name where the FILE_FIELD is set
     REDCAP_FILE_FIELD = "file field here" # Set to the REDCap field for file upload
-    REDCAP_RECORD_ID  = "record id here"  # Record ID of the patient. It can be a string or an integer
+    REDCAP_RECORD_ID  = "record id here"  # Record ID of the patient. It can be a string (with leading zeros) or an integer
 
 [slack]
     # Config for webhook messages to slack
