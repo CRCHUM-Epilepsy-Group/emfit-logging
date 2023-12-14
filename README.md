@@ -70,14 +70,14 @@ In case more are needed, here is the procedure to make some.
 2. Cut one end of the cable. Ideal length from the remaining end to the cut section should be around 3 feet, to be able to connect easily between the Emfit control unit and the Raspberry Pi. As a tip, if using 6 feet cables, cutting it in half will allow to make two 3-feet connectors.
 3. Expose the internal wires.
 
-   ![Internal Wires of a RJ45 Connector](https://www.srgclub.org/images/CatCable.jpg)
+    ![Internal Wires of a RJ45 Connector](https://www.srgclub.org/images/CatCable.jpg)
 
 4. Isolate the [wires 1 through 4][rj45b] (white-orange, solid-orange, white-green, and solid-blue). The other wires won't be needed for the connector as the Emfit control unit does not use them at all.
 5. Use a wire stripper to strip 1-2 mm off the end of the insulation of each wires.
 6. Use a crimping tool to attach a female Dupont 2.54 mm at the end of the 4 exposed wires.
 7. To make it easier to connect to the correct GPIO pins, it is recommended to use a 1x8P plastic connector to group the Dupont pins together, leaving the first 4 positions of the connector empty (starting from the small arrow) and then placing the wires 1 through 4 in order in the remaining 4 positions, as illustrated:
 
-  ![GPIO end of the connector](/.github/images/emfit-connector-Small.jpg)
+    ![GPIO end of the connector](/.github/images/emfit-connector-Small.jpg)
 
 [gpio]: https://www.raspberrypi.com/documentation/computers/raspberry-pi.html#gpio-and-the-40-pin-header
 [rj45b]: https://www.showmecables.com/media/wysiwyg/RJ45-Pinout-T568B.jpg
