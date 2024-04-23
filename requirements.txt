@@ -1,3 +1,4 @@
-gpiozero==1.6.2
-PyCap==2.4.0
-requests==2.31.0
+gpiozero==2.0.1
+lgpio
+PyCap==2.6.0
+requests

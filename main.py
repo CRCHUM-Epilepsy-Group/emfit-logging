@@ -29,10 +29,10 @@ ALARMS_LOG_FILE = (
 def setup_pin_factory() -> None:
     match platform.system():
         case "Linux":
-            from gpiozero.pins.native import NativeFactory
+            from gpiozero.pins.lgpio import LGPIOFactory
 
-            logging.debug("Setting pin factory to NativeFactory (Linux)")
-            gpiozero.Device.pin_factory = NativeFactory()
+            logging.debug("Setting pin factory to LGPIOFactory (Linux)")
+            gpiozero.Device.pin_factory = LGPIOFactory()
 
         case "Windows":
             from gpiozero.pins.mock import MockFactory
