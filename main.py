@@ -7,10 +7,12 @@ from datetime import datetime
 from pathlib import Path
 from time import sleep
 
+import discord
 import gpiozero
 import requests
 import tomllib
 from redcap.project import Project
+from typing_extensions import deprecated
 
 PROJ_ROOT = Path(__file__).parent.resolve()
 logging.basicConfig(
@@ -94,6 +96,7 @@ def send_alarms_to_redcap() -> None:
         )
 
 
+@deprecated("Use send_message_to_discord instead.")
 def send_message_to_slack(alarm_time: datetime) -> None:
     """Send the alarm to Slack through a webhook."""
 
@@ -116,6 +119,26 @@ def send_message_to_slack(alarm_time: datetime) -> None:
         )
 
 
+def send_message_to_discord(alarm_time: datetime) -> None:
+    """Send the alarm to Discord through a webhook."""
+    precise_time = discord.utils.format_dt(alarm_time, style="F")
+    relative_time = discord.utils.format_dt(alarm_time, style="R")
+    description = (
+        f"`{socket.gethostname()}` detected a seizure on "
+        f"{precise_time} ({relative_time})."
+    )
+
+    embed = discord.Embed(
+        title="EMFIT Alarm Detected",
+        description=description,
+        color=discord.Color.red(),
+        timestamp=discord.utils.utcnow(),
+    )
+
+    webhook = discord.SyncWebhook.from_url(CONFIG["discord"]["WEBHOOK_URL"])
+    webhook.send(embed=embed)
+
+
 def alarm_detected() -> None:
     """Actions when the alarm starts.
     Currently, we:
@@ -135,8 +158,8 @@ def alarm_detected() -> None:
             exc_info=sys.exc_info(),
         )
 
-    if CONFIG.get("slack"):
-        send_message_to_slack(alarm_time)
+    if CONFIG.get("discord"):
+        send_message_to_discord(alarm_time)
 
 
 def alarm_stopped() -> None:
