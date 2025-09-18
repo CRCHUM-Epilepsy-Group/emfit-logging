@@ -1,3 +1,5 @@
+timezone = "America/Montreal"
+
 [emfit]
     # Mapping of pins from the AUX cable to Raspberry Pi GPIO pins
     AUX_1_PIN = "BOARD9" # Common return (Ground, above pin 17. Not really needed to specify)
@@ -14,5 +16,9 @@
     REDCAP_RECORD_ID  = "record id here"  # Record ID of the patient. It can be a string (with leading zeros) or an integer
 
 [slack]
-    # Config for webhook messages to slack
+    # Config for webhook messages to Slack
     WEBHOOK_URL = "https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX"
+
+[discord]
+    # Config for webhook message to Discord
+    WEBHOOK_URL = "https://discord.com/api/webhooks/webhook-id/webhook-token"
