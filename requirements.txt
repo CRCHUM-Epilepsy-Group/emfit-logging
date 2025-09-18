@@ -1,4 +1,0 @@
-gpiozero==2.0.1
-lgpio
-PyCap==2.6.0
-requests

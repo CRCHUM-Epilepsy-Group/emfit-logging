@@ -1,0 +1,16 @@
+[project]
+    dependencies = [
+        "discord-py>=2.6.3",
+        "gpiozero==2.0.1",
+        "lgpio>=0.2.2.0 ; sys_platform == 'linux'",
+        "pycap==2.6.0",
+        "requests>=2.32.5",
+    ]
+    description = "Monitor the EMFIT device through a Raspberry Pi."
+    name = "emfit-logging"
+    readme = "README.md"
+    requires-python = ">=3.11"
+    version = "0.1.0"
+
+[tool.ruff.lint]
+    ignore = [ "PLC0415" ]
