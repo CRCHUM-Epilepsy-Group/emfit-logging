@@ -13,4 +13,7 @@
     version = "0.1.0"
 
 [tool.ruff.lint]
-    ignore = [ "PLC0415" ]
+    ignore = [
+        "G004",    # logging-f-strings
+        "PLC0415", # import-outside-top-level
+    ]
