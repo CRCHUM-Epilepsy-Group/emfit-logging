@@ -5,8 +5,8 @@ Python script for Raspberry Pi to detect and log alarms triggered by the Emfit M
 The configuration for this project needs a ``config.toml`` file to exist at the root of the project.
 You can use the ``config-example.toml`` file as a base to create your own configuration.
 
-The configuration is in two parts:
-
+The configuration is in few parts:
+- ``timezone``: The local timezone, e.g. "America/Montreal"
 - ``emfit``: Contains the [GPIO pin numbers][gpio] of the Raspberry Pi to connect the AUX cable (from the X2 port) from the Emfit control unit. The default configuration uses 4 consecutive pins on the Raspberry Pi for easier access, and unless those pins are broken or already occupied, should not have to be changed.
 - ``redcap``: Contains the REDCap configuration;
   - ``REDCAP_API_TOKEN``: The API token generated from the project page. This is very important to keep it secret!
@@ -16,16 +16,18 @@ The configuration is in two parts:
   - ``REDCAP_RECORD_ID``: The Record ID specific to the patient, in REDCap. This is probably the only configuration setting that will need to be modified regularly as new patients are admitted. If the ID has leading zeros, it needs to be entered as a string, otherwise an integer works.
 - ``slack``: Contains the Slack configuration (optional);
   - ``WEBHOOK_URL``: A URL to a Slack App Webhook. This will send a message with the hostname and timestamp of the alarm to the designated Slack channel.
+- ``discord``: Contains the Discord configuration (optional);
+  - ``WEBHOOK_URL``: A URL to a Discord channel Webhook. This will send a message with the hostname and timestamp of the alarm to the designated Discord channel.
 
 ## Python Configuration
-The project needs Python >=3.11 to work, as well as the packages listed in ``requirements.txt``.
-So after installing Python 3.11 or newer and cloning the repository, run ``pip install -r requirements.txt`` in your environment (if any) to install the required packages.
+The project needs Python >=3.11 ``uv`` to work, as well as the packages listed in ``pyproject.toml``.
+So after installing ``uv`` (https://docs.astral.sh/uv/getting-started/installation/#installing-uv) cloning the repository, run ``uv sync`` in the project's directory to install the required packages.
 
 ## Continuous Logging
 To make sure the program is running at boot, the easiest way is to set a task with ``crontab``.
 By running ``sudo crontab -e`` (and if it is the first time running the command, selecting a default editor) and adding the following line at the end, this will ensure the program is ran at boot.
 ```
-@reboot /path/to/python3.11 path/to/emfit-logging/main.py &
+@reboot /path/to/uv --project /path/to/emfit-logging run /path/to/emfit-logging/main.py &
 ```
 Restarting the Raspberry Pi should start the emfit-logging program automatically now.
 
