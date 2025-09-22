@@ -143,7 +143,7 @@ def send_message_to_discord(alarm_time: datetime) -> None:
         title="EMFIT Alarm Detected",
         description=description,
         color=discord.Color.red(),
-        timestamp=discord.utils.utcnow(),
+        timestamp=alarm_time,
     )
 
     webhook = discord.SyncWebhook.from_url(CONFIG["discord"]["WEBHOOK_URL"])
