@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import platform
 import signal
@@ -90,7 +91,9 @@ def send_alarms_to_redcap() -> None:
     """
     LOGGER.info(f"Sending {ALARMS_LOG_FILE.name} to REDCap")
     redcap_project = Project(
-        CONFIG["redcap"]["REDCAP_API_URL"], CONFIG["redcap"]["REDCAP_API_TOKEN"]
+        CONFIG["redcap"]["REDCAP_API_URL"],
+        CONFIG["redcap"]["REDCAP_API_TOKEN"],
+        timeout=CONFIG["timeout"],
     )
     with ALARMS_LOG_FILE.open() as f:
         # Import file == upload to REDCap
@@ -156,6 +159,29 @@ def send_message_to_discord(alarm_time: datetime) -> None:
         )
 
 
+def send_message_to_discord_proxy(alarm_time: datetime) -> None:
+    LOGGER.info("Sending to Discord Proxy...")
+    try:
+        requests.post(
+            "http://recherche-bouassi-1/discord_proxy/",
+            params={
+                "host": socket.gethostname(),
+                "timestamp": int(alarm_time.timestamp()),
+            },
+            timeout=CONFIG["timeout"],
+        )
+    except requests.Timeout:
+        LOGGER.exception("Timeout sending to Discord Proxy")
+
+
+async def send_notifications(alarm_time: datetime) -> None:
+    await asyncio.gather(
+        asyncio.to_thread(send_alarms_to_redcap),
+        asyncio.to_thread(send_message_to_discord, alarm_time),
+        asyncio.to_thread(send_message_to_discord_proxy, alarm_time),
+    )
+
+
 def alarm_detected() -> None:
     """Actions when the alarm starts.
 
@@ -163,19 +189,23 @@ def alarm_detected() -> None:
         - Get the datetime
         - Save the datetime to the ALARMS_LOG_FILE
         - Try to send (upload) the file to REDCap
+        - Try to send a notification to Discord
     """
     alarm_time = dt_now()
     LOGGER.debug(f"Alarm detected at {alarm_time}")
     save_alarm_to_file(alarm_time)
-    try:
-        send_alarms_to_redcap()
-    except requests.exceptions.RequestException as e:
-        LOGGER.exception(
-            f"There was a {e.__class__.__name__} sending the file to REDCap.",
-        )
+    # try:
+    #     send_alarms_to_redcap()
+    # except requests.exceptions.RequestException as e:
+    #     LOGGER.exception(
+    #         f"There was a {e.__class__.__name__} sending the file to REDCap.",
+    #     )
 
-    if CONFIG.get("discord"):
-        send_message_to_discord(alarm_time)
+    # if CONFIG.get("discord"):
+    #     send_message_to_discord(alarm_time)
+    #     send_message_to_discord_proxy(alarm_time)
+
+    asyncio.run(send_notifications(alarm_time))
 
 
 def alarm_stopped() -> None:

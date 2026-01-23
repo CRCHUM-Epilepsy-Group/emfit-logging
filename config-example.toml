@@ -1,4 +1,5 @@
 timezone = "America/Montreal"
+timeout  = 60
 
 [emfit]
     # Mapping of pins from the AUX cable to Raspberry Pi GPIO pins
