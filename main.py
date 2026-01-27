@@ -194,18 +194,9 @@ def alarm_detected() -> None:
     alarm_time = dt_now()
     LOGGER.debug(f"Alarm detected at {alarm_time}")
     save_alarm_to_file(alarm_time)
-    # try:
-    #     send_alarms_to_redcap()
-    # except requests.exceptions.RequestException as e:
-    #     LOGGER.exception(
-    #         f"There was a {e.__class__.__name__} sending the file to REDCap.",
-    #     )
-
-    # if CONFIG.get("discord"):
-    #     send_message_to_discord(alarm_time)
-    #     send_message_to_discord_proxy(alarm_time)
 
     asyncio.run(send_notifications(alarm_time))
+    LOGGER.debug("Notifications sent, waiting for next alarm...")
 
 
 def alarm_stopped() -> None:
