@@ -173,6 +173,9 @@ def send_message_to_discord_proxy(alarm_time: datetime) -> None:
     except requests.Timeout:
         LOGGER.exception("Timeout sending to Discord Proxy")
 
+    except requests.ConnectionError:
+        LOGGER.info("Cannot connect to Discord Proxy, ignoring")
+
 
 async def send_notifications(alarm_time: datetime) -> None:
     await asyncio.gather(
